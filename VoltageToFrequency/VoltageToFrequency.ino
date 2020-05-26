@@ -12,7 +12,7 @@
 int sensorPin = A0;    // select the input pin for the potentiometer
 int ledPin = 13;      // select the pin for the LED
 int freqOutputPin = 2;
-int sensorValue = 0.0;
+double sensorValue = 0.0;
 double setPoint = 0;  // variable to store the value coming from the sensor
 double freqSetPoint = 0;
 double timeSetPoint = 0;
