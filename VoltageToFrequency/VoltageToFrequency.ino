@@ -1,21 +1,11 @@
 
-// Header section for importing libraries
-// #include <DateTime.h>
-//  #include <DateTimeStrings.h>
-
-#define MAX_FREQ 200
-#define MIN_FREQ 2
-#define MAX_VOLTAGE 5
-#define MIN_VOLTAGE 0
-
 // Global variable declarations
 int sensorPin = A0;    // select the input pin for the potentiometer
 int ledPin = 13;      // select the pin for the LED
 int freqOutputPin = 2;
-double sensorValue = 0.0;
-double setPoint = 0;  // variable to store the value coming from the sensor
-double freqSetPoint = 0;
-double timeSetPoint = 0;
+int sensorValue = 0; // variable to store the value coming from the sensor
+float freqSetPoint = 0; 
+float timeSetPoint = 0;
 
 
 
@@ -36,17 +26,18 @@ void loop() {
     // put your main code here, to run repeatedly:
 
   // read the value from the sensor:
-  sensorValue = analogRead(sensorPin);
-    
+  sensorValue = analogRead(sensorPin); // Returns an int value between 0-1023
+
     // Convert from volts to hertz
-  freqSetPoint = ((MAX_FREQ-MIN_FREQ)/(MAX_VOLTAGE-MIN_VOLTAGE))*sensorValue;
+  freqSetPoint = (512.0/1023)*sensorValue; 
   
-  if (freqSetPoint > MAX_FREQ) {
-    freqSetPoint = MAX_FREQ;
+  if (freqSetPoint > 512) {
+    freqSetPoint = 512.0;
   }
-  else if (freqSetPoint < MIN_FREQ) {
-    freqSetPoint = MIN_FREQ;
+  else if (freqSetPoint < 5) {
+    freqSetPoint = 5.0;
   }
+Serial.println(freqSetPoint);
 
 timeSetPoint = 1/freqSetPoint;
 timeSetPoint = timeSetPoint*1000; //convert time set point to miliseconds to use with delay()
