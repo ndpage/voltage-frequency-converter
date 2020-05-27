@@ -30,21 +30,58 @@ void loop() {
 
     // Convert from volts to hertz
   freqSetPoint = (512.0/1023)*sensorValue; 
+  freqSetPoint = 100.0;
   
-  if (freqSetPoint > 512) {
-    freqSetPoint = 512.0;
-  }
-  else if (freqSetPoint < 5) {
-    freqSetPoint = 5.0;
-  }
-Serial.println(freqSetPoint);
+freqSetPoint = checkLimits(freqSetPoint);
+
+printFloat(freqSetPoint);
 
 timeSetPoint = 1/freqSetPoint;
 timeSetPoint = timeSetPoint*1000; //convert time set point to miliseconds to use with delay()
-  
+ /* 
   digitalWrite(2, HIGH);
   delay(timeSetPoint/2);
 
   digitalWrite(2, LOW);
   delay(timeSetPoint/2);
+  */
+}
+
+float checkLimits(float value){
+  if (value > 512) {
+    return 512.0;
+  }
+  else if (value < 5) {
+    return 5.0;
+  }
+  else return value;
+}
+
+void updateSerial(int input){
+  Serial.println(input);
+  return ;
+}
+
+void printFloat(float valueToPrint) {
+  const long timeInterval = 1000;
+  static unsigned long lastTime = 0;
+  
+  unsigned long now = millis();
+
+  if ( now - lastTime > timeInterval) {
+    lastTime = now;
+    Serial.println(valueToPrint);
+  }
+}
+
+void printString(char* valueToPrint) {
+  const long timeInterval = 1000;
+  static unsigned long lastTime = 0;
+  
+  unsigned long now = millis();
+
+  if ( now - lastTime > timeInterval) {
+    lastTime = now;
+    Serial.println(valueToPrint);
+  }
 }
