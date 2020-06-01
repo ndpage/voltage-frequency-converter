@@ -3,9 +3,8 @@
 // Global variable declarations
 int sensorPin = A0;    // select the input pin for the potentiometer
 int ledPin = 13;      // select the pin for the LED
-double setPoint = 0;  // variable to store the value coming from the sensor
-double freqSetPoint = 0;
-double timeSetPoint = 0;
+float freqSetPoint = 0;
+float timeSetPoint = 0;
 
 
 // Main setup function 
